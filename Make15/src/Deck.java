@@ -35,5 +35,10 @@ public class Deck
       return this.CARDS[this.cardIndex--];
    }
 
+   public boolean isEmpty(){
+      return (NUMCARDS == 0);
+
+   }
+
 
 }//class

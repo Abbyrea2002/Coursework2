@@ -4,13 +4,27 @@
  */
 public class Make15
 {
-   private static final int NUMCARDSP = 5;
-   private static final int NUMCARDSC = 1;
-   private Card[] player = new Card[NUMCARDSP];
-   private Card[] computer = new Card[NUMCARDSC];
    private int score = 0;
 
    public static void main(String[] args){
+
+      Deck deck = new Deck();
+      Hand player = new Hand();
+      Hand computer = new Hand();
+
+      for(int i = 0; i < 5; i++){
+         player.addCard(deck.deal());
+      }
+
+      do{
+         System.out.println("Your hand is: " + player);
+         System.out.println("Computer card: " + computer);
+
+
+      }while(!deck.isEmpty());
+
+
+
 
    }
 
