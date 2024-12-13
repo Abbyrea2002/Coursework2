@@ -12,7 +12,7 @@ public class Hand {
    }
 
    public ArrayList<Card> getCards(){
-      return this.cards;
+      return new ArrayList<>(cards);
 
    }
 
