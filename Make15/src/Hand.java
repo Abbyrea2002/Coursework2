@@ -17,11 +17,22 @@ public class Hand {
    }
 
    public int getHandSize(){
+
+
       return cards.size();
    }
 
    public void addCard(Card card){
+
       cards.add(card);
+   }
+
+   public void replace(int index, Card newCard){
+      if(index <= 0 && index <= cards.size()){
+         throw new IllegalArgumentException("Invalid. no card at this position");
+      }
+      cards.set(index, newCard);
+
    }
 
    private static boolean inHand(Card card, Card[] hand){

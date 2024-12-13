@@ -6,12 +6,16 @@ import java.util.Scanner;
  */
 public class Make15
 {
-   private int score = 0;
+
 
    public static void main(String[] args){
       Make15 game = new Make15();
       Scanner scanner = new Scanner(System.in);
 
+      int score = 0;
+      String input = "";
+      int choice = -1;
+      int choice2 = -1;
 
       Deck deck = new Deck();
       Hand player = new Hand();
@@ -23,7 +27,7 @@ public class Make15
       }
 
       while(true){
-         int choice = -1;
+
 
          System.out.println("Your hand is:");
          for(int i = 0; i < player.getHandSize(); i++){
@@ -31,7 +35,7 @@ public class Make15
             System.out.println((i + 1) + ". " + player.getCards().get(i));
          }
          computer.addCard(deck.deal());
-         System.out.println("Computer card: " + computer.getCards());
+         System.out.println("Computer card: " + computer.getCards().get(computer.getHandSize() - 1));
 
          System.out.println("Enter the number of the card you would like to play: ");
 
@@ -46,6 +50,27 @@ public class Make15
          }catch(Exception e){
             System.out.println("Invalid input. Please enter a number between 1 and 5");
             continue;
+
+         }
+
+         Card selectedCard = player.getCards().get(choice-1);
+
+         if(selectedCard.getRankValue() + computer.getCards().get(1).getRankValue() == 15 ){
+            Card newCard = deck.deal();
+            player.replace(choice, newCard);
+            score++;
+
+            System.out.println("would you like to replace any picture cards in your hand?");
+            input = scanner.nextLine().toLowerCase();
+
+            if(input.equals("yes") || input.equals("y")){
+
+               System.out.println("Which card would you like to select");
+            }
+            if(input.equals("no") || input.equals("n"))
+
+         }
+         if(){
 
          }
 
