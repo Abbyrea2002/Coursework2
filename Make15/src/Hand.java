@@ -27,10 +27,17 @@ public class Hand {
       cards.add(card);
    }
 
+   public void remove(int index){
+      if(index >= 0 && index < cards.size()){
+         cards.remove(index);
+      }
+   }
+
    public void replace(int index, Card newCard){
       if(index <= 0 && index <= cards.size()){
          throw new IllegalArgumentException("Invalid. no card at this position");
       }
+      cards.remove(index);
       cards.set(index, newCard);
 
    }

@@ -10,23 +10,21 @@ public class Make15
       Make15 game = new Make15();
       Scanner scanner = new Scanner(System.in);
 
-      int score = 0;
-      int choice = -1;
-      int choice2 = -1;
-      String input = "";
-
-
       Deck deck = new Deck();
       Hand player = new Hand();
       Hand computer = new Hand();
 
 
+      for(int i = 0; i < 5; i++){
+         player.addCard(deck.deal());
+      }
 
-
-      while(!deck.isEmpty() || player.getHandSize() > 0){
-         for(int i = 0; i < 5; i++){
-            player.addCard(deck.deal());
-         }
+      while(true){
+         int score = 0;
+         int choice = -1;
+         int choice2 = -1;
+         String input = "";
+         int currentSum = 0;
 
          System.out.println("Your hand is:");
          for(int i = 0; i < player.getHandSize(); i++){
@@ -37,8 +35,6 @@ public class Make15
          System.out.println("Computer card: " + computer.getCards().get(computer.getHandSize() - 1));
 
          System.out.println("Enter the number of the card you would like to play: ");
-
-
 
          try{
             choice = Integer.parseInt(scanner.nextLine());
@@ -52,9 +48,12 @@ public class Make15
 
          }
 
-         Card selectedCard = player.getCards().get(choice-1);
+         Card selectedCard = player.getCards().get(choice);
 
-         if(selectedCard.getRankValue() + computer.getCards().get(1).getRankValue() == 15 ){
+         currentSum += selectedCard.getRankValue();
+         currentSum += computer.getCards().get(0).getRankValue();
+
+         if(currentSum == 15 ){
             Card newCard = deck.deal();
             player.replace(choice, newCard);
             score++;
@@ -91,11 +90,10 @@ public class Make15
                }
             }
          }
-         else if(selectedCard.getSuit().equals(computer.getCards().get(1).getSuit())){
-            Card newCard3 = deck.deal();
-            player.replace(choice, newCard3);
+         else if(selectedCard.getSuit().equals(computer.getCards().get(0).getSuit())){
+
          }
-         else if(selectedCard.getRankValue() + computer.getCards().get(1).getRankValue() != 15 ){
+         else if(selectedCard.getRankValue() + computer.getCards().get(0).getRankValue() != 15 && !selectedCard.getSuit().equals(computer.getCards().get(1).getSuit())){
             break;
          }
          else if(deck.isEmpty()){

@@ -43,7 +43,9 @@ public class Card implements Comparable<Card>
    //fde QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ0-----PO0}
 
    public int getRankValue(){
-      return RANK;
+      if(RANK < 9) return RANK + 2;
+      if(RANK == 12) return 12;
+      return 11;
    }
 
 
