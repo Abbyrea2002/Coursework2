@@ -38,7 +38,7 @@ public class Hand {
          throw new IllegalArgumentException("Invalid. no card at this position");
       }
       cards.remove(index);
-      cards.set(index, newCard);
+      cards.add(index, newCard);
 
    }
 

@@ -43,9 +43,22 @@ public class Card implements Comparable<Card>
    //}
 
    public int getRankValue(){
-      if(RANK < 9) return RANK + 1;
-      if(RANK == 12) return 12;
-      return 11;
+      switch (getRank()) {
+         case "2": return 2;
+         case "3": return 3;
+         case "4": return 4;
+         case "5": return 5;
+         case "6": return 6;
+         case "7": return 7;
+         case "8": return 8;
+         case "9": return 9;
+         case "10": return 10;
+         case "Jack": return 11;
+         case "Queen": return 11;
+         case "King": return 11;
+         case "Ace": return 12; // Change to 11 if required
+         default: throw new IllegalStateException("Unexpected value: " + getRank());
+      }
    }
 
 
