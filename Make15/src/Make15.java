@@ -19,7 +19,7 @@ public class Make15
          player.addCard(deck.deal());
       }
 
-      while(true){
+      while(!deck.isEmpty() || player.getHandSize() > 0){
          int score = 0;
          int choice = -1;
          int choice2 = -1;
@@ -48,7 +48,7 @@ public class Make15
 
          }
 
-         Card selectedCard = player.getCards().get(choice);
+         Card selectedCard = player.getCards().get(choice-1);
 
          currentSum += selectedCard.getRankValue();
          currentSum += computer.getCards().get(0).getRankValue();
@@ -90,15 +90,14 @@ public class Make15
                }
             }
          }
-         else if(selectedCard.getSuit().equals(computer.getCards().get(0).getSuit())){
+         else if(selectedCard.getSuit().equals(computer.getCards().get(computer.getHandSize() - 1).getSuit())){
+            computer.replace(computer.getHandSize()-2, deck.deal());
 
          }
          else if(selectedCard.getRankValue() + computer.getCards().get(0).getRankValue() != 15 && !selectedCard.getSuit().equals(computer.getCards().get(1).getSuit())){
             break;
          }
-         else if(deck.isEmpty()){
-           break;
-        }
+
       }
 
 

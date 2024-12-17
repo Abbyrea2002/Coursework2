@@ -40,10 +40,10 @@ public class Card implements Comparable<Card>
 
    //public String getColour(){
      // return COLOURS[COLOUR];
-   //fde QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ0-----PO0}
+   //}
 
    public int getRankValue(){
-      if(RANK < 9) return RANK + 2;
+      if(RANK < 9) return RANK + 1;
       if(RANK == 12) return 12;
       return 11;
    }
