@@ -34,11 +34,11 @@ public class Hand {
    }
 
    public void replace(int index, Card newCard){
-      if(index <= 0 && index <= cards.size()){
-         throw new IllegalArgumentException("Invalid. no card at this position");
+      if (index >= 0 && index < cards.size()) { // Validate the index
+         cards.set(index, newCard); // Replace the card
+      } else {
+         System.out.println("Error: Replace index out of bounds. Index: " + index);
       }
-      cards.remove(index);
-      cards.add(index, newCard);
 
    }
 

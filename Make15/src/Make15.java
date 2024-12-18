@@ -21,8 +21,8 @@ public class Make15
 
       while(!deck.isEmpty() || player.getHandSize() > 0){
          int score = 0;
-         int choice = -1;
-         int choice2 = -1;
+         int choice = 0;
+         int choice2 = 0;
          String input = "";
 
 
@@ -38,7 +38,7 @@ public class Make15
 
          try{
             choice = Integer.parseInt(scanner.nextLine());
-            if(choice < 1 || choice > player.getHandSize()){
+            if(choice - 1 < 0 || choice > player.getHandSize()){
                throw new IllegalArgumentException("Invalid, please enter a valid card number");
             }
 
@@ -47,6 +47,9 @@ public class Make15
             continue;
 
          }
+         System.out.println("Debug: Player's hand size: " + player.getHandSize());
+         System.out.println("Debug: User-selected card (0-based index): " + (choice - 1));
+
 
          Card selectedCard = player.getCards().get(choice-1);
 
@@ -70,7 +73,7 @@ public class Make15
                   System.out.println("Which card would you like to select");
                   try{
                      choice2 = Integer.parseInt(scanner.nextLine());
-                     if(choice2 < 1 || choice2 > player.getHandSize()){
+                     if(choice2 -1 < 0|| choice2 > player.getHandSize()){
                         throw new IllegalArgumentException("Invalid, please enter a valid card number");
                      }
 
@@ -80,7 +83,7 @@ public class Make15
 
                   }
                   Card newCard2 = deck.deal();
-                  player.replace(choice2 -1, newCard2);
+                  player.replace(choice2-1, newCard2);
 
                }
                else if(input.equals("no") || input.equals("n")){
