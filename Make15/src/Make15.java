@@ -21,8 +21,6 @@ public class Make15
 
       while(!deck.isEmpty() || player.getHandSize() > 0){
          int score = 0;
-         int choice = 0;
-         int choice2 = 0;
          String input = "";
 
 
@@ -35,18 +33,8 @@ public class Make15
          System.out.println("Computer card: " + computer);
 
          System.out.println("Enter the number of the card you would like to play: ");
+         int choice = getPlayerChoice(scanner, player.getHandSize());
 
-         try{
-            choice = Integer.parseInt(scanner.nextLine());
-            if(choice - 1 < 0 || choice > player.getHandSize()){
-               throw new IllegalArgumentException("Invalid, please enter a valid card number");
-            }
-
-         }catch(Exception e){
-            System.out.println("Invalid input. Please enter a number between 1 and 5");
-            continue;
-
-         }
          System.out.println("Debug: Player's hand size: " + player.getHandSize());
          System.out.println("Debug: User-selected card (0-based index): " + (choice - 1));
 
@@ -71,17 +59,8 @@ public class Make15
                      System.out.println((i + 1) + ". " + player.getCards().get(i));
                   }
                   System.out.println("Which card would you like to select");
-                  try{
-                     choice2 = Integer.parseInt(scanner.nextLine());
-                     if(choice2 -1 < 0|| choice2 > player.getHandSize()){
-                        throw new IllegalArgumentException("Invalid, please enter a valid card number");
-                     }
+                  int choice2 = getPlayerChoice(scanner, player.getHandSize());
 
-                  }catch(Exception e){
-                     System.out.println("Invalid input. Please enter a number between 1 and 5");
-                     continue;
-
-                  }
                   Card newCard2 = deck.deal();
                   player.replace(choice2-1, newCard2);
 
@@ -109,5 +88,24 @@ public class Make15
 
 
    }
+
+   private static int getPlayerChoice(Scanner scanner, int handSize){
+      while(true)
+      {
+         try
+         {
+            int choice = Integer.parseInt(scanner.nextLine());
+            if (choice - 1 < 0 || choice > handSize)
+            {
+               throw new IllegalArgumentException("Invalid, please enter a valid card number");
+            }
+            return choice;
+         } catch (Exception e)
+         {
+            System.out.println("Invalid input. Please enter a number between 1 and 5");
+         }
+      }
+   }
+
 
 }//class
