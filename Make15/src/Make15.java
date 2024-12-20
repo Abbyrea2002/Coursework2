@@ -7,21 +7,48 @@ import java.util.Scanner;
 public class Make15
 {
    public static void main(String[] args){
-      Make15 game = new Make15();
+      HighScore.displayHighScores();
       Scanner scanner = new Scanner(System.in);
+      boolean playAgain = true;
 
+      while (playAgain) {
+         Make15 game = new Make15();
+         game.startGame();
+
+         System.out.println("Would you like to play again? (yes/no): ");
+         String input = scanner.nextLine().toLowerCase();
+
+         if (input.equals("no") || input.equals("n")) {
+            playAgain = false;
+            System.out.println("Thank you for playing!");
+         } else if (!input.equals("yes") && !input.equals("y")) {
+            System.out.println("Invalid input, exiting the game.");
+            playAgain = false;
+         }
+      }
+
+      scanner.close();
+   }
+   public void startGame(){
+      Scanner scanner = new Scanner(System.in);
       Deck deck = new Deck();
       Hand player = new Hand();
-
+      boolean gameEnded = false;
+      int score = 0;
 
 
       for(int i = 0; i < 5; i++){
          player.addCard(deck.deal());
       }
 
-      while(!deck.isEmpty() || player.getHandSize() > 0){
-         int score = 0;
+      while(!gameEnded){
+
          String input = "";
+         if (deck.isEmpty() && player.getHandSize() == 0) {
+            // No cards left in the deck or hand, end the game
+            gameEnded = true;
+            break;
+         }
 
 
          System.out.println("Your hand is:");
@@ -77,15 +104,19 @@ public class Make15
             player.replace(choice-1, deck.deal());
 
          }
-         else if(currentSum != 15 && !selectedCard.getSuit().equals(computer.getSuit())){
-            System.out.println("Score: " + score);
-            break;
+         else{
+            gameEnded = true;
          }
 
       }
-
-
-
+      System.out.println("\nGame over! Score: " + score);
+      if (HighScore.isNewHighScore(score)) {
+         System.out.print("Congratulations! You made a high score. Enter your name: ");
+         String name = scanner.nextLine();
+         HighScore.addHighScore(name, score);
+         System.out.println("New high scores:");
+         HighScore.displayHighScores();
+      }
 
    }
 
