@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -6,6 +8,7 @@ import java.util.Scanner;
  */
 public class Make15
 {
+   private final List<String> replayData = new ArrayList<>();
    public static void main(String[] args){
       HighScore.displayHighScores();
       Scanner scanner = new Scanner(System.in);
@@ -14,6 +17,13 @@ public class Make15
       while (playAgain) {
          Make15 game = new Make15();
          game.startGame();
+
+
+         System.out.println("Would you like to view a replay of the game? (yes/no): ");
+         String replayChoice = scanner.nextLine().toLowerCase();
+         if (replayChoice.equals("yes") || replayChoice.equals("y")) {
+            game.displayReplay();
+         }
 
          System.out.println("Would you like to play again? (yes/no): ");
          String input = scanner.nextLine().toLowerCase();
@@ -62,14 +72,17 @@ public class Make15
          System.out.println("Enter the number of the card you would like to play: ");
          int choice = getPlayerChoice(scanner, player.getHandSize());
 
-         System.out.println("Debug: Player's hand size: " + player.getHandSize());
-         System.out.println("Debug: User-selected card (0-based index): " + (choice - 1));
 
 
          Card selectedCard = player.getCards().get(choice-1);
 
          int currentSum = selectedCard.getRankValue() + computer.getRankValue();
-         System.out.println(currentSum);
+
+
+         replayData.add("Player's hand: " + player.getCards() +
+               " | Computer card: " + computer +
+               " | Played card: " + selectedCard +
+               " | Current sum: " + currentSum);
 
          if(currentSum == 15 ){
             Card newCard = deck.deal();
@@ -81,15 +94,30 @@ public class Make15
                input = scanner.nextLine().toLowerCase();
 
                if(input.equals("yes") || input.equals("y")){
-                  for(int i = 0; i < player.getHandSize(); i++){
+                  boolean hasPictureCard = false;
+                  for (Card card : player.getCards()) {
+                     if (isPictureCard(card)) {
+                        hasPictureCard = true;
+                        break;
+                     }
+                  }
 
+                  if (!hasPictureCard) {
+                     System.out.println("You don't have any picture cards in your hand.");
+                     break;
+                  }
+
+                  // Display the hand and ask for the player's choice
+                  System.out.println("Your hand is:");
+                  for (int i = 0; i < player.getHandSize(); i++) {
                      System.out.println((i + 1) + ". " + player.getCards().get(i));
                   }
-                  System.out.println("Which card would you like to select");
-                  int choice2 = getPlayerChoice(scanner, player.getHandSize());
+
+                  System.out.println("Which card would you like to select?");
+                  int choice = getPictureCardChoice(scanner, player);
 
                   Card newCard2 = deck.deal();
-                  player.replace(choice2-1, newCard2);
+                  player.replace(pictureCardChoice-1, newCard2);
 
                }
                else if(input.equals("no") || input.equals("n")){
@@ -134,6 +162,40 @@ public class Make15
          } catch (Exception e)
          {
             System.out.println("Invalid input. Please enter a number between 1 and 5");
+         }
+      }
+   }
+
+   public void displayReplay() {
+      System.out.println("\n---- Game Replay ----");
+      for (String round : replayData) {
+         System.out.println(round);
+      }
+      System.out.println("---------------------");
+   }
+   private static boolean isPictureCard(Card card) {
+      // Checks if the card is a King, Queen, Jack, or Ace
+      int rank = card.getRankValue();
+      return rank == 11 || rank == 12 || rank == 13 || rank == 1;
+   }
+
+   private static int getPictureCardChoice(Scanner scanner, Hand player) {
+      while (true) {
+         try {
+            int choice = Integer.parseInt(scanner.nextLine());
+            if (choice - 1 < 0 || choice > player.getHandSize()) {
+               throw new IllegalArgumentException("Invalid, please enter a valid card number");
+            }
+
+            // Validate if the selected card is a picture card
+            Card selectedCard = player.getCards().get(choice - 1);
+            if (!isPictureCard(selectedCard)) {
+               throw new IllegalArgumentException("Invalid choice. Please select a King, Queen, Jack, or Ace.");
+            }
+
+            return choice;
+         } catch (Exception e) {
+            System.out.println(e.getMessage());
          }
       }
    }
