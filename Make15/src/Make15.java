@@ -51,10 +51,12 @@ public class Make15
          player.addCard(deck.deal());
       }
 
-      while(!gameEnded){
+      while(!gameEnded)
+      {
 
          String input = "";
-         if (deck.isEmpty() && player.getHandSize() == 0) {
+         if (deck.isEmpty() && player.getHandSize() == 0)
+         {
             // No cards left in the deck or hand, end the game
             gameEnded = true;
             break;
@@ -62,7 +64,8 @@ public class Make15
 
 
          System.out.println("Your hand is:");
-         for(int i = 0; i < player.getHandSize(); i++){
+         for (int i = 0; i < player.getHandSize(); i++)
+         {
 
             System.out.println((i + 1) + ". " + player.getCards().get(i));
          }
@@ -73,8 +76,7 @@ public class Make15
          int choice = getPlayerChoice(scanner, player.getHandSize());
 
 
-
-         Card selectedCard = player.getCards().get(choice-1);
+         Card selectedCard = player.getCards().get(choice - 1);
 
          int currentSum = selectedCard.getRankValue() + computer.getRankValue();
 
@@ -84,55 +86,66 @@ public class Make15
                " | Played card: " + selectedCard +
                " | Current sum: " + currentSum);
 
-         if(currentSum == 15 ){
+         int choice2 = 0;
+         if (currentSum == 15)
+         {
             Card newCard = deck.deal();
             player.replace(choice-1, newCard);
             score++;
 
-            while(true){
+            while (true)
+            {
                System.out.println("would you like to replace any picture cards in your hand?");
                input = scanner.nextLine().toLowerCase();
 
-               if(input.equals("yes") || input.equals("y")){
+               if (input.equals("yes") || input.equals("y"))
+               {
                   boolean hasPictureCard = false;
-                  for (Card card : player.getCards()) {
-                     if (isPictureCard(card)) {
+                  for (Card card : player.getCards())
+                  {
+                     if (isPictureCard(card))
+                     {
                         hasPictureCard = true;
                         break;
                      }
                   }
 
-                  if (!hasPictureCard) {
+                  if (!hasPictureCard)
+                  {
                      System.out.println("You don't have any picture cards in your hand.");
                      break;
                   }
 
                   // Display the hand and ask for the player's choice
                   System.out.println("Your hand is:");
-                  for (int i = 0; i < player.getHandSize(); i++) {
+                  for (int i = 0; i < player.getHandSize(); i++)
+                  {
                      System.out.println((i + 1) + ". " + player.getCards().get(i));
                   }
 
                   System.out.println("Which card would you like to select?");
-                  int choice = getPictureCardChoice(scanner, player);
+                  choice2 = getPictureCardChoice(scanner, player);
 
                   Card newCard2 = deck.deal();
-                  player.replace(pictureCardChoice-1, newCard2);
+                  player.replace(choice2 - 1, newCard2);
 
-               }
-               else if(input.equals("no") || input.equals("n")){
+               } else if (input.equals("no") || input.equals("n"))
+               {
                   break;
-               }else{
+               } else
+               {
                   System.out.println("invalid input. enter yes or no");
                }
             }
-         }
-         else if(selectedCard.getSuit().equals(computer.getSuit())){
+         } else if (selectedCard.getSuit().equals(computer.getSuit()))
+         {
             computer = deck.deal();
-            player.replace(choice-1, deck.deal());
+            System.out.println("Debug: Player's hand size: " + player.getHandSize());
+            System.out.println("Debug: User-selected card (0-based index): " + (choice - 1));
+            player.replace(choice - 1, deck.deal());
 
-         }
-         else{
+         } else
+         {
             gameEnded = true;
          }
 
