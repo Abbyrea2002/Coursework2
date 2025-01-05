@@ -11,7 +11,7 @@ public class Hand {
       cards = new ArrayList<>();
    }
 
-   public ArrayList<Card> getCards(){
+   public static ArrayList<Card> getCards(){
       return new ArrayList<>(cards);
 
    }
@@ -27,12 +27,6 @@ public class Hand {
       cards.add(card);
    }
 
-   public void remove(int index){
-      if(index >= 0 && index < cards.size()){
-         cards.remove(index);
-      }
-   }
-
    public void replace(int index, Card newCard){
       if (index >= 0 && index < cards.size()) { // Validate the index
          cards.set(index, newCard); // Replace the card
@@ -40,16 +34,6 @@ public class Hand {
          System.out.println("Error: Replace index out of bounds. Index: " + index);
       }
 
-   }
-
-   private static boolean inHand(Card card, Card[] hand){
-      for (Card cardInHand : hand) {
-         if (card.getSuit().equals(cardInHand.getSuit()) &&
-               card.getRank().equals(cardInHand.getRank())) {
-            return true;
-         }
-      }
-      return false;
    }
 
 }//class

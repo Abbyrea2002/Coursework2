@@ -18,7 +18,7 @@ public class Deck
       this.shuffle();
    }
 
-   private void shuffle(){
+   public void shuffle(){
       int index;
       Card temp;
       Random random = new Random();
@@ -32,11 +32,14 @@ public class Deck
    }
 
    public Card deal(){
-      return this.CARDS[this.cardIndex--];
+      if (isEmpty()) {  // Check if deck is empty
+         throw new IllegalStateException("Cannot deal from an empty deck");
+      }
+      return this.CARDS[cardIndex--];
    }
 
    public boolean isEmpty(){
-      return (NUMCARDS == 0);
+      return cardIndex < 0;
 
    }
 
