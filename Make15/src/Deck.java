@@ -32,7 +32,7 @@ public class Deck
    }
 
    public Card deal(){
-      if (isEmpty()) {  // Check if deck is empty
+      if (isEmpty()) {
          throw new IllegalStateException("Cannot deal from an empty deck");
       }
       return this.CARDS[cardIndex--];

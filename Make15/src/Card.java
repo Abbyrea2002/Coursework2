@@ -14,12 +14,12 @@ public class Card implements Comparable<Card>
    private static final Random GENERATOR = new Random();
    private static final String[] RANKS = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" };
    private static final String[] SUITS = {"Clubs", "Diamonds", "Hearts", "Spades"};
-   //private static final String[] COLOURS = {"Red", "Black"};
+
 
    public Card(){
       RANK = GENERATOR.nextInt(RANKS.length);
       SUIT = GENERATOR.nextInt(SUITS.length);
-      //COLOUR = (SUIT == 1 || SUIT == 2) ? 0 : 1;
+
 
 
    }
@@ -38,9 +38,7 @@ public class Card implements Comparable<Card>
 
    }
 
-   //public String getColour(){
-     // return COLOURS[COLOUR];
-   //}
+
 
    public int getRankValue(){
       switch (getRank()) {
@@ -56,7 +54,7 @@ public class Card implements Comparable<Card>
          case "Jack": return 11;
          case "Queen": return 11;
          case "King": return 11;
-         case "Ace": return 12; // Change to 11 if required
+         case "Ace": return 12;
          default: throw new IllegalStateException("Unexpected value: " + getRank());
       }
    }

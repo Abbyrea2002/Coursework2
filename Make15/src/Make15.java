@@ -21,17 +21,32 @@ public class Make15
 
          System.out.println("Would you like to view a replay of the game? (yes/no): ");
          String replayChoice = scanner.nextLine().toLowerCase();
-         if (replayChoice.equals("yes") || replayChoice.equals("y")) {
+
+         while (!(replayChoice.equals("yes") || replayChoice.equals("y") || replayChoice.equals("no") || replayChoice.equals("n"))) {
+            System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            System.out.println("Would you like to view a replay of the game? (yes/no): ");
+            replayChoice = scanner.nextLine().toLowerCase(); // Ask again
+         }
+
+         if (replayChoice.equals("yes") || replayChoice.equals("y"))
+         {
             game.displayReplay();
          }
 
          System.out.println("Would you like to play again? (yes/no): ");
          String input = scanner.nextLine().toLowerCase();
 
+         while (!(input.equals("yes") || input.equals("y") || input.equals("no") || input.equals("n"))) {
+            System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            System.out.println("Would you like to play again? (yes/no): ");
+            input = scanner.nextLine().toLowerCase(); // Ask again
+         }
+
          if (input.equals("no") || input.equals("n")) {
             playAgain = false;
             System.out.println("Thank you for playing!");
-         } else if (!input.equals("yes") && !input.equals("y")) {
+         } else if (!input.equals("yes") && !input.equals("y"))
+         {
             System.out.println("Invalid input, exiting the game.");
             playAgain = false;
          }
@@ -140,8 +155,7 @@ public class Make15
          } else if (selectedCard.getSuit().equals(computer.getSuit()))
          {
             computer = deck.deal();
-            System.out.println("Debug: Player's hand size: " + player.getHandSize());
-            System.out.println("Debug: User-selected card (0-based index): " + (choice - 1));
+
             player.replace(choice - 1, deck.deal());
 
          } else
